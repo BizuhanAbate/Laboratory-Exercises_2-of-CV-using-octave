@@ -1,9 +1,9 @@
-function compare_color_spaces_effect(image_path)
-    % Function to compare effects of different color spaces on image processing tasks
+function color_space_comparison(image_path)
+    % Function to compare image processing tasks across different color spaces
     % Input:
     %   image_path: Path to the image file
     % Output:
-    %   Displays original image and processed images in different color spaces
+    %   Displays original and processed images in different color spaces
 
     % Check if the image package is loaded, otherwise load it
     if (~pkg('list', 'image'))
@@ -13,24 +13,45 @@ function compare_color_spaces_effect(image_path)
     % Load the original image
     img = imread(image_path);
 
+    % Display the original image
+    figure;
+    subplot(2, 3, 1);
+    imshow(img);
+    title('Original Image');
+
     % Convert image to grayscale
     gray_img = rgb2gray(img);
+
+    % Display the grayscale image
+    subplot(2, 3, 2);
+    imshow(gray_img);
+    title('Grayscale');
 
     % Convert image to HSV color space
     hsv_img = rgb2hsv(img);
 
-    % Extract components of HSV image
-    hue_img = hsv_img(:,:,1);
-    saturation_img = hsv_img(:,:,2);
-    value_img = hsv_img(:,:,3);
+    % Display the HSV components: Hue, Saturation, Value
+    subplot(2, 3, 3);
+    imshow(hsv_img(:, :, 1));
+    title('HSV - Hue');
+
+    subplot(2, 3, 4);
+    imshow(hsv_img(:, :, 2));
+    title('HSV - Saturation');
+
+    subplot(2, 3, 5);
+    imshow(hsv_img(:, :, 3));
+    title('HSV - Value');
 
     % Perform edge detection on grayscale image
-    edge_gray = edge(gray_img, 'Sobel');
+    edge_img = edge(gray_img, 'Sobel');
 
-    % Perform edge detection on value channel of HSV image
-    edge_value = edge(value_img, 'Sobel');
+    % Display edges detected in grayscale
+    subplot(2, 3, 6);
+    imshow(edge_img);
+    title('Edges Detected (Grayscale)');
 
-    % Perform segmentation on saturation channel of HSV image
-    % Example: Thresholding to obtain binary image
-    threshold =
-
+    % Adjust figure properties
+    set(gcf, 'Position', [100, 100, 1200, 800]);
+    sgtitle('Comparison of Color Spaces for Image Processing');
+end
